@@ -1,0 +1,52 @@
+:root {
+  /* Marca */
+  --color-brand-900: #0b2e22;
+  --color-brand-800: #0f3d2e;
+  --color-brand-700: #14523d;
+  --color-brand-600: #1a6b4f;
+  --color-brand-500: #21875f;
+  --color-brand-400: #3fbf86;
+  --color-brand-100: #dcefe6;
+  --color-brand-50: #eef7f2;
+  --color-accent-500: #d4a017;
+
+  /* Neutros */
+  --color-bg: #f2f5f3;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f7f9f8;
+  --color-border: #dfe5e2;
+  --color-border-strong: #c5cec9;
+  --color-text: #16211c;
+  --color-text-muted: #56665e;
+  --color-text-subtle: #84928b;
+
+  /* Estados */
+  --color-success-600: #15803d;
+  --color-success-50: #ecfdf3;
+  --color-danger-600: #c0392b;
+  --color-danger-50: #fdf0ee;
+  --color-warning-600: #b7791f;
+  --color-warning-50: #fdf6e7;
+  --color-info-600: #2563a8;
+  --color-info-50: #eef4fb;
+
+  /* Tipografia */
+  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, 'Courier New', monospace;
+
+  /* Forma e profundidade */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(16, 24, 20, 0.06);
+  --shadow-md: 0 4px 14px rgba(16, 24, 20, 0.08);
+  --shadow-focus: 0 0 0 3px rgba(33, 135, 95, 0.28);
+
+  /* Movimento */
+  --transition-fast: 150ms ease;
+  --transition-base: 220ms ease;
+
+  /* Layout */
+  --container-max: 1180px;
+  --header-height: 64px;
+}

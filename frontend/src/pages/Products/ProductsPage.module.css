@@ -1,0 +1,98 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  margin-bottom: 14px;
+  padding: 12px;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-brand-600);
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.product > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.product strong {
+  font-size: 14.5px;
+}
+
+.product span {
+  font-size: 12.5px;
+}
+
+.swatch {
+  width: 8px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.stock {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  min-width: 120px;
+}
+
+.stock :global(.progress) {
+  width: 100%;
+  height: 6px;
+}
+
+.actions {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.archived {
+  opacity: 0.6;
+}
+
+.created {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.createdIcon {
+  color: var(--color-success-600);
+}
+
+@media (max-width: 720px) {
+  .toolbar > * {
+    flex: 1 1 100% !important;
+  }
+
+  .stock {
+    align-items: flex-end;
+    min-width: 0;
+    width: 55%;
+  }
+}

@@ -1,0 +1,239 @@
+.toolbar {
+  margin-bottom: 12px;
+}
+
+.search .input {
+  height: 46px;
+  padding-right: 44px;
+  font-size: 15px;
+  box-shadow: var(--shadow-sm);
+}
+
+.clear {
+  position: absolute;
+  right: 6px;
+}
+
+.results {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: var(--color-info-50);
+  color: var(--color-info-600);
+  font-size: 13.5px;
+  animation: fade-up 200ms ease both;
+}
+
+.resultChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--color-info-600) 30%, transparent);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-info-600);
+  cursor: pointer;
+}
+
+.chip b {
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--color-info-50);
+}
+
+.chipActive {
+  background: var(--color-info-600);
+  color: #fff;
+}
+
+.chipActive b {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Abas dos galpões */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 4px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 118px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.tab:hover {
+  border-color: var(--color-brand-500);
+}
+
+.tabActive {
+  border-color: var(--color-brand-700);
+  background: var(--color-brand-900);
+  color: #fff;
+  box-shadow: var(--shadow-md);
+}
+
+.tabCode {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.tabMeta {
+  font-size: 11.5px;
+  color: var(--color-text-muted);
+}
+
+.tabActive .tabMeta {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tabBar {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  margin-top: 4px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--color-surface-muted);
+}
+
+.tabActive .tabBar {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.tabBar span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--color-brand-500);
+  transition: width 500ms ease;
+}
+
+.tabActive .tabBar span {
+  background: var(--color-brand-400);
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.summary h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.summary p {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.summary dl {
+  display: flex;
+  gap: 22px;
+  margin: 0;
+}
+
+.summary dt {
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--color-text-subtle);
+}
+
+.summary dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 100%;
+  padding: 4px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  font-size: 12.5px;
+}
+
+.legendName {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sectors {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 720px) {
+  .summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .summary dl {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .legend {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .legendItem {
+    flex-shrink: 0;
+  }
+
+  .tab {
+    min-width: 100px;
+  }
+}
