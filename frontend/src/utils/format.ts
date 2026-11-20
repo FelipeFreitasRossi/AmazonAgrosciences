@@ -57,11 +57,14 @@ export function expiryStatus(value: string | null | undefined): { label: string;
   return { label: 'Dentro da validade', tone: 'success' };
 }
 
-export const MOVEMENT_META: Record<MovementType, { label: string; tone: 'success' | 'danger' | 'info' | 'neutral' }> = {
-  entrada: { label: 'Entrada', tone: 'success' },
-  saida: { label: 'Saída', tone: 'danger' },
-  transferencia: { label: 'Transferência', tone: 'info' },
-  remocao: { label: 'Remoção', tone: 'neutral' },
+export const MOVEMENT_META: Record<
+  MovementType,
+  { label: string; tone: 'success' | 'danger' | 'info' | 'neutral'; description: string }
+> = {
+  entrada: { label: 'Entrada', tone: 'success', description: 'Produto chegou: recipiente novo ou litros adicionados.' },
+  saida: { label: 'Saída', tone: 'danger', description: 'Litros retirados de um recipiente.' },
+  transferencia: { label: 'Transferência', tone: 'info', description: 'Recipiente mudou de posição ou de galpão.' },
+  remocao: { label: 'Remoção', tone: 'neutral', description: 'Recipiente saiu do galpão; a posição ficou livre.' },
 };
 
 /** Converte o texto de um input numérico (aceita vírgula) em número. */

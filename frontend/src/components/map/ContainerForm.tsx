@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { CSSProperties, FormEvent } from 'react';
 import { Plus } from 'lucide-react';
 import ProductForm from '@/components/products/ProductForm.tsx';
+import InfoTip from '@/components/ui/InfoTip.tsx';
 import { useResponsible } from '@/hooks/useResponsible.ts';
 import { ApiError } from '@/services/api.ts';
 import { containerService } from '@/services/inventoryService.ts';
@@ -131,6 +132,14 @@ export default function ContainerForm({
       <div className="form-grid">
         {apiError && <div className="alert alert-error span-2">{apiError}</div>}
 
+        <div className="step-title">
+          <span className="step-number">1</span>
+          <div>
+            <strong>Qual produto?</strong>
+            <small>O fertilizante que está dentro do recipiente. Se ainda não existe, clique em “Novo”.</small>
+          </div>
+        </div>
+
         <div className="field span-2">
           <label className="label" htmlFor="c-product">
             Produto (fertilizante)
@@ -170,6 +179,14 @@ export default function ContainerForm({
           )}
         </div>
 
+<div className="step-title">
+          <span className="step-number">2</span>
+          <div>
+            <strong>Recipiente e quantidade</strong>
+            <small>Tipo de embalagem e quantos litros ela tem agora.</small>
+          </div>
+        </div>
+
         <div className="field">
           <label className="label" htmlFor="c-type">
             Tipo de recipiente
@@ -186,6 +203,7 @@ export default function ContainerForm({
         <div className="field">
           <label className="label" htmlFor="c-capacity">
             Capacidade <span className="optional">(se diferente)</span>
+            <InfoTip>Quanto cabe neste recipiente quando cheio. Deixe vazio para usar o padrão do tipo (ex.: IBC = 1.000 L).</InfoTip>
           </label>
           <div className="input-group">
             <input
@@ -243,7 +261,14 @@ export default function ContainerForm({
           )}
         </div>
 
-        <p className="form-section-title">Onde está</p>
+<div className="step-title">
+          <span className="step-number">3</span>
+          <div>
+            <strong>Onde está</strong>
+            <small>Escolha o galpão, o setor e toque numa posição livre da grade.</small>
+          </div>
+        </div>
+
         <div className="span-2">
           <LocationPicker
             value={location}
@@ -256,11 +281,19 @@ export default function ContainerForm({
           />
         </div>
 
-        <p className="form-section-title">Identificação e validade</p>
+<div className="step-title">
+          <span className="step-number">4</span>
+          <div>
+            <strong>Identificação e validade</strong>
+            <small>Opcional, mas ajuda a rastrear o produto.</small>
+          </div>
+        </div>
+
 
         <div className="field">
           <label className="label" htmlFor="c-code">
             Código do recipiente <span className="optional">(opcional)</span>
+            <InfoTip>Etiqueta única do IBC ou barril. Se deixar vazio, o sistema gera uma sequência (IBC-0001, IBC-0002...).</InfoTip>
           </label>
           <input
             id="c-code"
@@ -274,6 +307,7 @@ export default function ContainerForm({
         <div className="field">
           <label className="label" htmlFor="c-lot">
             Lote <span className="optional">(opcional)</span>
+            <InfoTip>Número de fabricação impresso no rótulo. Permite rastrear de qual produção veio o produto.</InfoTip>
           </label>
           <input id="c-lot" className="input mono" value={lot} onChange={(e) => setLot(e.target.value)} />
         </div>
@@ -298,6 +332,14 @@ export default function ContainerForm({
             Observações <span className="optional">(opcional)</span>
           </label>
           <textarea id="c-notes" className="textarea" value={notes} onChange={(e) => setNotes(e.target.value)} />
+        </div>
+
+<div className="step-title">
+          <span className="step-number">5</span>
+          <div>
+            <strong>Quem está registrando</strong>
+            <small>Fica gravado no histórico de movimentações.</small>
+          </div>
         </div>
 
         <div className="field span-2">

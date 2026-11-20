@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
+import InfoTip from '@/components/ui/InfoTip.tsx';
 import { ApiError } from '@/services/api.ts';
 import { productService } from '@/services/inventoryService.ts';
 import type { Product, ProductInput } from '@/types/inventory.ts';
@@ -133,9 +134,18 @@ export default function ProductForm({ product, categories = [], onSaved, onCance
       <div className="form-grid">
         {apiError && <div className="alert alert-error span-2">{apiError}</div>}
 
+        <div className="step-title">
+          <span className="step-number">1</span>
+          <div>
+            <strong>Identificação</strong>
+            <small>Como o produto é reconhecido na empresa.</small>
+          </div>
+        </div>
+
         <div className="field">
           <label className="label" htmlFor="p-code">
             Código
+            <InfoTip align="left">Código interno curto e único do produto, ex.: FOL-001. Aparece nos blocos do mapa.</InfoTip>
           </label>
           <input id="p-code" className="input mono" placeholder="Ex.: FOL-001" maxLength={30} {...field('code')} />
           {errors.code && <span className="field-error">{errors.code}</span>}
@@ -144,6 +154,7 @@ export default function ProductForm({ product, categories = [], onSaved, onCance
         <div className="field">
           <label className="label" htmlFor="p-category">
             Categoria
+            <InfoTip>Grupo do fertilizante (Foliar, NPK, Bioestimulante...). Escolha uma sugestão ou digite uma nova.</InfoTip>
           </label>
           <input id="p-category" className="input" list="p-categories" placeholder="Ex.: Foliar" {...field('category')} />
           <datalist id="p-categories">
@@ -165,6 +176,7 @@ export default function ProductForm({ product, categories = [], onSaved, onCance
         <div className="field span-2">
           <label className="label" htmlFor="p-composition">
             Composição / garantias <span className="optional">(opcional)</span>
+            <InfoTip>Teores de nutrientes garantidos no rótulo.</InfoTip>
           </label>
           <input id="p-composition" className="input" placeholder="Ex.: N 10% + P 10% + K 10%" {...field('composition')} />
         </div>
@@ -179,6 +191,7 @@ export default function ProductForm({ product, categories = [], onSaved, onCance
         <div className="field">
           <label className="label" htmlFor="p-min">
             Estoque mínimo
+            <InfoTip align="right">Soma de litros em todos os recipientes abaixo da qual o produto entra em alerta de “Estoque baixo”. Use 0 para não alertar.</InfoTip>
           </label>
           <div className="input-group">
             <input id="p-min" className="input" inputMode="decimal" placeholder="0" style={{ paddingLeft: 12 }} {...field('min_stock')} />
@@ -191,11 +204,19 @@ export default function ProductForm({ product, categories = [], onSaved, onCance
           )}
         </div>
 
-        <p className="form-section-title">Características técnicas</p>
+<div className="step-title">
+          <span className="step-number">2</span>
+          <div>
+            <strong>Características técnicas</strong>
+            <small>Dados do rótulo e da ficha técnica. Todos opcionais.</small>
+          </div>
+        </div>
+
 
         <div className="field">
           <label className="label" htmlFor="p-density">
             Densidade <span className="optional">(opcional)</span>
+            <InfoTip align="left">Quantos quilos pesa 1 litro. Ex.: 1,25 kg/L significa que 1.000 L pesam 1.250 kg.</InfoTip>
           </label>
           <div className="input-group">
             <input id="p-density" className="input" inputMode="decimal" placeholder="Ex.: 1,25" style={{ paddingLeft: 12 }} {...field('density')} />
@@ -215,6 +236,7 @@ export default function ProductForm({ product, categories = [], onSaved, onCance
         <div className="field span-2">
           <label className="label" htmlFor="p-hazard">
             Classificação de risco <span className="optional">(opcional)</span>
+            <InfoTip>Classe de risco da ficha de segurança (FISPQ/FDS), se houver.</InfoTip>
           </label>
           <input id="p-hazard" className="input" placeholder="Ex.: Não perigoso / Classe 8 — Corrosivo" {...field('hazard_class')} />
         </div>
@@ -231,6 +253,14 @@ export default function ProductForm({ product, categories = [], onSaved, onCance
             Descrição <span className="optional">(opcional)</span>
           </label>
           <textarea id="p-description" className="textarea" {...field('description')} />
+        </div>
+
+<div className="step-title">
+          <span className="step-number">3</span>
+          <div>
+            <strong>Aparência no mapa</strong>
+            <small>A cor ajuda a reconhecer o produto de longe na planta dos galpões.</small>
+          </div>
         </div>
 
         <div className="field span-2">

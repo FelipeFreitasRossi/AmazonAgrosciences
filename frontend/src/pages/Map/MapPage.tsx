@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
-import { MapPin, PackagePlus, Search, Warehouse as WarehouseIcon, X } from 'lucide-react';
+import { Map as MapIcon, MapPin, PackagePlus, Search, Warehouse as WarehouseIcon, X } from 'lucide-react';
 import ContainerForm from '@/components/map/ContainerForm.tsx';
 import ContainerPanel from '@/components/map/ContainerPanel.tsx';
+import MapGuide from '@/components/map/MapGuide.tsx';
 import SectorGrid from '@/components/map/SectorGrid.tsx';
 import type { LocationValue } from '@/components/map/LocationPicker.tsx';
 import EmptyState from '@/components/ui/EmptyState.tsx';
@@ -138,8 +139,10 @@ export default function MapPage() {
   return (
     <>
       <PageHeader
+        eyebrow="Estoque"
+        icon={MapIcon}
         title="Mapa do estoque"
-        description="Planta 2D dos galpões. Clique numa posição livre para armazenar ou num recipiente para ver e movimentar."
+        description="Planta vista de cima de cada galpão. Cada quadrado é uma posição no chão: os coloridos têm um recipiente, os tracejados estão livres."
         actions={
           <button type="button" className="btn btn-primary" onClick={() => setEntry({})} disabled={Boolean(noWarehouses)}>
             <PackagePlus size={17} /> Nova entrada
@@ -179,6 +182,10 @@ export default function MapPage() {
                 </button>
               )}
             </div>
+            <p className={styles.searchHint}>
+              Digite o nome do fertilizante, o código do recipiente (ex.: <code>IBC-0012</code>), o lote ou a posição (ex.:{' '}
+              <code>G01-A-07</code>). A busca procura em todos os galpões.
+            </p>
           </div>
 
           {debounced && results.data && (
@@ -230,6 +237,8 @@ export default function MapPage() {
             })}
           </div>
 
+          <MapGuide />
+
           {warehouse && (
             <div className={styles.summary}>
               <div>
@@ -256,7 +265,8 @@ export default function MapPage() {
           )}
 
           {legend.length > 0 && (
-            <div className={styles.legend} aria-label="Legenda">
+            <div className={styles.legend} aria-label="Legenda de cores dos produtos">
+              <span className={styles.legendTitle}>Cores dos produtos neste galpão:</span>
               {legend.map((item) => (
                 <span key={item.code} className={styles.legendItem} title={item.name}>
                   <span className="color-dot" style={{ background: item.color }} />

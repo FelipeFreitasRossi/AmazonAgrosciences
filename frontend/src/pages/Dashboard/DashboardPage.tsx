@@ -8,6 +8,7 @@ import {
   CalendarClock,
   Droplets,
   Grid3x3,
+  LayoutDashboard,
   Package,
   PackagePlus,
   Plus,
@@ -17,6 +18,8 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import EmptyState from '@/components/ui/EmptyState.tsx';
+import HelpPanel from '@/components/ui/HelpPanel.tsx';
+import InfoTip from '@/components/ui/InfoTip.tsx';
 import PageHeader from '@/components/ui/PageHeader.tsx';
 import { useToast } from '@/contexts/ToastContext.tsx';
 import { useFetch } from '@/hooks/useFetch.ts';
@@ -32,16 +35,20 @@ interface KpiProps {
   detail?: ReactNode;
   tone?: 'brand' | 'warning' | 'info' | 'danger';
   to?: string;
+  help: string;
 }
 
-function Kpi({ icon: Icon, label, value, detail, tone = 'brand', to }: KpiProps) {
+function Kpi({ icon: Icon, label, value, detail, tone = 'brand', to, help }: KpiProps) {
   const content = (
     <>
       <span className={`${styles.kpiIcon} ${styles[`tone_${tone}`]}`}>
         <Icon size={20} aria-hidden />
       </span>
       <div className={styles.kpiText}>
-        <span className={styles.kpiLabel}>{label}</span>
+        <span className={styles.kpiLabel}>
+          {label}
+          <InfoTip label={`O que é: ${label}`}>{help}</InfoTip>
+        </span>
         <strong className={styles.kpiValue}>{value}</strong>
         {detail && <span className={styles.kpiDetail}>{detail}</span>}
       </div>
@@ -89,7 +96,7 @@ export default function DashboardPage() {
   if (error && !data) {
     return (
       <>
-        <PageHeader title="Dashboard" />
+        <PageHeader eyebrow="Visão geral" icon={LayoutDashboard} title="Dashboard" />
         <div className="card">
           <EmptyState
             icon={AlertTriangle}
@@ -109,7 +116,7 @@ export default function DashboardPage() {
   if (loading && !data) {
     return (
       <>
-        <PageHeader title="Dashboard" description="Carregando visão geral do estoque..." />
+        <PageHeader eyebrow="Visão geral" icon={LayoutDashboard} title="Dashboard" description="Carregando visão geral do estoque..." />
         <div className={styles.kpis}>
           {Array.from({ length: 6 }, (_, i) => (
             <div key={i} className="skeleton" style={{ height: 96 }} />
@@ -126,7 +133,7 @@ export default function DashboardPage() {
   if (totals.warehouses === 0 && totals.products === 0) {
     return (
       <>
-        <PageHeader title="Dashboard" description="Visão geral do estoque da Amazon Agrosciences." />
+        <PageHeader eyebrow="Visão geral" icon={LayoutDashboard} title="Dashboard" description="Visão geral do estoque da Amazon Agrosciences." />
         <div className="card">
           <EmptyState
             icon={Sparkles}
@@ -156,19 +163,39 @@ export default function DashboardPage() {
   return (
     <>
       <PageHeader
+        eyebrow="Visão geral"
+        icon={LayoutDashboard}
         title="Dashboard"
-        description={`Atualizado ${formatRelative(data.generated_at)} · visão geral do estoque`}
+        description={`Resumo de todo o estoque, atualizado ${formatRelative(data.generated_at)}. Clique em um card ou barra para ver os detalhes.`}
         actions={actions}
       />
 
+      <HelpPanel
+        id="dashboard"
+        steps={[
+          <>Os <strong>cards no topo</strong> resumem o estoque. Passe o mouse no <strong>ⓘ</strong> para ver o que cada número significa.</>,
+          <><strong>Ocupação por galpão</strong> mostra quantas posições estão em uso. Clique numa barra para abrir o mapa daquele galpão.</>,
+          <><strong>Alertas</strong> (estoque baixo e validade) indicam o que precisa de atenção primeiro.</>,
+          <>Use <strong>Nova entrada</strong> para armazenar um recipiente e <strong>Novo produto</strong> para cadastrar um fertilizante.</>,
+        ]}
+      />
+
       <div className={styles.kpis}>
-        <Kpi icon={Package} label="Produtos cadastrados" value={formatNumber(totals.products)} to="/produtos" />
+        <Kpi
+          icon={Package}
+          label="Produtos cadastrados"
+          value={formatNumber(totals.products)}
+          detail="Fertilizantes ativos"
+          to="/produtos"
+          help="Quantos fertilizantes diferentes estão cadastrados (sem contar os arquivados). Um produto pode estar em vários recipientes."
+        />
         <Kpi
           icon={Boxes}
           label="Recipientes armazenados"
           value={formatNumber(totals.containers)}
           detail="IBCs, barris e bombonas"
           to="/mapa"
+          help="Quantos IBCs, barris e bombonas estão hoje dentro dos galpões, ocupando uma posição."
         />
         <Kpi
           icon={Droplets}
@@ -176,6 +203,7 @@ export default function DashboardPage() {
           value={formatLiters(totals.total_volume_l)}
           detail={`${formatPercent(capacityPct)} da capacidade dos recipientes`}
           tone="info"
+          help="Soma dos litros de todos os recipientes. A porcentagem compara esse total com quanto caberia se todos estivessem cheios."
         />
         <Kpi
           icon={Warehouse}
@@ -183,6 +211,7 @@ export default function DashboardPage() {
           value={formatNumber(totals.warehouses)}
           detail={`${totals.sectors} setores`}
           to="/galpoes"
+          help="Galpões cadastrados e quantos setores (áreas com grade de posições) existem no total."
         />
         <Kpi
           icon={Grid3x3}
@@ -190,6 +219,7 @@ export default function DashboardPage() {
           value={formatPercent(totals.occupancy_pct)}
           detail={`${totals.positions_used} de ${totals.positions_total} posições`}
           to="/mapa"
+          help="Porcentagem das posições dos galpões que têm um recipiente. Quanto mais perto de 100%, menos vagas livres."
         />
         <Kpi
           icon={AlertTriangle}
@@ -197,15 +227,19 @@ export default function DashboardPage() {
           value={formatNumber(alerts)}
           detail={`${totals.low_stock_count} estoque baixo · ${totals.expiring_count} validade`}
           tone={alerts ? 'warning' : 'brand'}
+          help="Produtos abaixo do estoque mínimo somados aos recipientes que vencem em até 60 dias (ou já vencidos). Veja os detalhes nos painéis abaixo."
         />
       </div>
 
       <div className={styles.grid}>
         <section className={`card ${styles.span2}`}>
           <header className="card-header">
-            <h2>
+            <div className="card-title">
+              <h2>
               <Warehouse size={17} /> Ocupação por galpão
             </h2>
+              <p>Posições em uso em cada galpão · clique para abrir o mapa</p>
+            </div>
             <Link to="/mapa" className="btn btn-ghost btn-sm">
               Ver mapa
             </Link>
@@ -240,9 +274,12 @@ export default function DashboardPage() {
 
         <section className="card">
           <header className="card-header">
-            <h2>
+            <div className="card-title">
+              <h2>
               <AlertTriangle size={17} /> Estoque baixo
             </h2>
+              <p>Produtos abaixo do estoque mínimo definido no cadastro</p>
+            </div>
             {totals.low_stock_count > 0 && <span className="badge badge-warning">{totals.low_stock_count}</span>}
           </header>
           <div className="card-body">
@@ -276,9 +313,12 @@ export default function DashboardPage() {
 
         <section className={`card ${styles.span2}`}>
           <header className="card-header">
-            <h2>
+            <div className="card-title">
+              <h2>
               <Droplets size={17} /> Volume por produto
             </h2>
+              <p>Litros armazenados de cada fertilizante · clique para localizar</p>
+            </div>
             <Link to="/produtos" className="btn btn-ghost btn-sm">
               Produtos
             </Link>
@@ -305,9 +345,12 @@ export default function DashboardPage() {
 
         <section className="card">
           <header className="card-header">
-            <h2>
+            <div className="card-title">
+              <h2>
               <CalendarClock size={17} /> Validade próxima
             </h2>
+              <p>Recipientes que vencem em até 60 dias</p>
+            </div>
             {totals.expiring_count > 0 && <span className="badge badge-warning">{totals.expiring_count}</span>}
           </header>
           <div className="card-body">
@@ -338,9 +381,12 @@ export default function DashboardPage() {
 
         <section className={`card ${styles.span3}`}>
           <header className="card-header">
-            <h2>
+            <div className="card-title">
+              <h2>
               <ArrowLeftRight size={17} /> Últimas movimentações
             </h2>
+              <p>As 8 operações mais recentes registradas</p>
+            </div>
             <Link to="/movimentacoes" className="btn btn-ghost btn-sm">
               Ver histórico
             </Link>

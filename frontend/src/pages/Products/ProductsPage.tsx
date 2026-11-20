@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams } from 'react-router';
 import { ArchiveRestore, CheckCircle2, MapPin, Package, PackagePlus, Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import ProductForm from '@/components/products/ProductForm.tsx';
 import EmptyState from '@/components/ui/EmptyState.tsx';
+import HelpPanel from '@/components/ui/HelpPanel.tsx';
+import InfoTip from '@/components/ui/InfoTip.tsx';
 import Modal from '@/components/ui/Modal.tsx';
 import PageHeader from '@/components/ui/PageHeader.tsx';
 import { useToast } from '@/contexts/ToastContext.tsx';
@@ -90,13 +92,25 @@ export default function ProductsPage() {
   return (
     <>
       <PageHeader
+        eyebrow="Cadastros"
+        icon={Package}
         title="Produtos"
-        description="Fertilizantes cadastrados, características e estoque somado de todos os recipientes."
+        description="Catálogo de fertilizantes. O estoque de cada produto é a soma dos litros de todos os recipientes em que ele está."
         actions={
           <button type="button" className="btn btn-primary" onClick={() => setEditing(null)}>
             <Plus size={17} /> Novo produto
           </button>
         }
+      />
+
+      <HelpPanel
+        id="produtos"
+        steps={[
+          <>Cadastre cada fertilizante <strong>uma única vez</strong>, com código, categoria e características técnicas.</>,
+          <>Depois registre <strong>onde ele está</strong> pelo botão <PackagePlus size={14} style={{ verticalAlign: -2 }} /> (Armazenar), que abre o mapa.</>,
+          <>A coluna <strong>Em estoque</strong> soma todos os recipientes. A barra compara com o estoque mínimo.</>,
+          <>O botão <MapPin size={14} style={{ verticalAlign: -2 }} /> mostra no mapa todos os recipientes daquele produto.</>,
+        ]}
       />
 
       <div className={`card ${styles.toolbar}`}>
@@ -160,9 +174,18 @@ export default function ProductsPage() {
                 <tr>
                   <th>Produto</th>
                   <th>Categoria</th>
-                  <th className="num">Em estoque</th>
-                  <th className="num">Recipientes</th>
-                  <th>Situação</th>
+                  <th className="num">
+                    Em estoque <InfoTip>Soma dos litros deste produto em todos os recipientes e galpões.</InfoTip>
+                  </th>
+                  <th className="num">
+                    Recipientes <InfoTip>Em quantos IBCs, barris ou bombonas o produto está armazenado.</InfoTip>
+                  </th>
+                  <th>
+                    Situação{' '}
+                    <InfoTip align="right">
+                      Em estoque: acima do mínimo. Estoque baixo: abaixo do mínimo cadastrado. Sem estoque: nenhum litro armazenado.
+                    </InfoTip>
+                  </th>
                   <th className="actions">
                     <span className="sr-only">Ações</span>
                   </th>

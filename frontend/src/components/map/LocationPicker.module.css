@@ -62,13 +62,13 @@
 .taken {
   border-style: solid;
   border-color: transparent;
-  background: #dfe5e2;
-  color: #9aa7a1;
+  background: var(--color-slot-taken);
+  color: var(--color-text-subtle);
   cursor: not-allowed;
 }
 
 .current {
-  background: repeating-linear-gradient(45deg, #dfe5e2, #dfe5e2 4px, #eef2f0 4px, #eef2f0 8px);
+  background: repeating-linear-gradient(45deg, var(--color-slot-taken), var(--color-slot-taken) 4px, var(--color-surface-muted) 4px, var(--color-surface-muted) 8px);
   color: var(--color-text-muted);
 }
 
@@ -105,7 +105,7 @@
   background: var(--color-surface);
 }
 .legendTaken {
-  background: #dfe5e2;
+  background: var(--color-slot-taken);
 }
 .legendSelected {
   background: var(--color-brand-600);

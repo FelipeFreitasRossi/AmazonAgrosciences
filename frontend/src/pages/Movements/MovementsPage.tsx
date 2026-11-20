@@ -6,6 +6,7 @@ import { ApiError } from '@/services/api.ts';
 import { movementService } from '@/services/inventoryService.ts';
 import type { Movement, MovementType } from '@/types/inventory.ts';
 import { MOVEMENT_META, formatDateTime, formatLiters } from '@/utils/format.ts';
+import styles from './MovementsPage.module.css';
 
 const PAGE_SIZE = 30;
 const FILTERS: { value: MovementType | ''; label: string }[] = [
@@ -47,7 +48,23 @@ export default function MovementsPage() {
 
   return (
     <>
-      <PageHeader title="Movimentações" description="Histórico completo de entradas, saídas e transferências, com responsável e horário." />
+      <PageHeader
+        eyebrow="Estoque"
+        icon={ArrowLeftRight}
+        title="Movimentações"
+        description="Histórico de tudo o que entrou, saiu ou mudou de lugar, com o responsável, a data e a hora. Nada aqui pode ser apagado."
+      />
+
+      <div className={styles.types}>
+        {(Object.keys(MOVEMENT_META) as MovementType[]).map((key) => (
+          <div key={key} className={styles.type}>
+            <span className={`badge ${MOVEMENT_META[key].tone === 'neutral' ? '' : `badge-${MOVEMENT_META[key].tone}`}`}>
+              {MOVEMENT_META[key].label}
+            </span>
+            <span>{MOVEMENT_META[key].description}</span>
+          </div>
+        ))}
+      </div>
 
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }} role="tablist">
         {FILTERS.map((f) => (

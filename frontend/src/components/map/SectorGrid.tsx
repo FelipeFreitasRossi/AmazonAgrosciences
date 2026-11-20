@@ -34,7 +34,8 @@ export default function SectorGrid({ sector, warehouseCode, highlighted, onSelec
             {sector.name && <span> · {sector.name}</span>}
           </h3>
           <p>
-            {sector.positions_used}/{sector.positions_total} posições ocupadas · {formatLiters(volume)}
+            {sector.rows} linhas × {sector.cols} colunas · <strong>{sector.positions_total - sector.positions_used} livres</strong> de{' '}
+            {sector.positions_total} · {formatLiters(volume)} armazenados
           </p>
         </div>
         {highlighted && matches > 0 && <span className="badge badge-info">{matches} encontrado(s)</span>}
@@ -47,7 +48,7 @@ export default function SectorGrid({ sector, warehouseCode, highlighted, onSelec
         >
           <span />
           {Array.from({ length: sector.cols }, (_, i) => (
-            <span key={`c${i}`} className={styles.axis}>
+            <span key={`c${i}`} className={styles.axis} title={`Coluna ${i + 1}`}>
               C{i + 1}
             </span>
           ))}
@@ -55,7 +56,7 @@ export default function SectorGrid({ sector, warehouseCode, highlighted, onSelec
           {Array.from({ length: sector.rows }, (_, r) => {
             const row = r + 1;
             return [
-              <span key={`r${row}`} className={styles.axis}>
+              <span key={`r${row}`} className={styles.axis} title={`Linha ${row}`}>
                 L{row}
               </span>,
               ...Array.from({ length: sector.cols }, (_, c) => {

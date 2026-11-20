@@ -21,13 +21,13 @@ import styles from './ContainerPanel.module.css';
 
 type Tab = 'details' | 'entry' | 'withdraw' | 'move' | 'edit' | 'remove';
 
-const TABS: { id: Tab; label: string; icon: LucideIcon }[] = [
-  { id: 'details', label: 'Detalhes', icon: Info },
-  { id: 'entry', label: 'Entrada', icon: ArrowDownToLine },
-  { id: 'withdraw', label: 'Saída', icon: ArrowUpFromLine },
-  { id: 'move', label: 'Transferir', icon: MoveRight },
-  { id: 'edit', label: 'Editar', icon: Pencil },
-  { id: 'remove', label: 'Remover', icon: Trash2 },
+const TABS: { id: Tab; label: string; icon: LucideIcon; help: string }[] = [
+  { id: 'details', label: 'Detalhes', icon: Info, help: 'Informações do recipiente e tudo o que já aconteceu com ele.' },
+  { id: 'entry', label: 'Entrada', icon: ArrowDownToLine, help: 'Adicionar litros a este recipiente, por exemplo ao completar com produto recebido.' },
+  { id: 'withdraw', label: 'Saída', icon: ArrowUpFromLine, help: 'Retirar litros deste recipiente, por exemplo para um pedido ou aplicação.' },
+  { id: 'move', label: 'Transferir', icon: MoveRight, help: 'Levar o recipiente inteiro para outra posição, setor ou galpão. A quantidade não muda.' },
+  { id: 'edit', label: 'Editar', icon: Pencil, help: 'Corrigir lote, datas de fabricação e validade ou observações.' },
+  { id: 'remove', label: 'Remover', icon: Trash2, help: 'O recipiente sai do galpão (ex.: IBC vazio devolvido) e a posição fica livre.' },
 ];
 
 interface ContainerPanelProps {
@@ -77,6 +77,8 @@ export default function ContainerPanel({ container, onChanged }: ContainerPanelP
           </button>
         ))}
       </div>
+
+      <p className={styles.tabHelp}>{TABS.find((t) => t.id === tab)?.help}</p>
 
       <div className={styles.content}>
         {tab === 'details' && <Details container={container} />}

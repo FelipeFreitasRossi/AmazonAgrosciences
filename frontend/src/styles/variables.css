@@ -1,4 +1,9 @@
+/* ==========================================================================
+   Tema claro (padrão)
+   ========================================================================== */
 :root {
+  color-scheme: light;
+
   /* Marca */
   --color-brand-900: #0b2e22;
   --color-brand-800: #0f3d2e;
@@ -11,7 +16,7 @@
   --color-accent-500: #d4a017;
 
   /* Neutros */
-  --color-bg: #f2f5f3;
+  --color-bg: #f1f4f2;
   --color-surface: #ffffff;
   --color-surface-muted: #f7f9f8;
   --color-border: #dfe5e2;
@@ -19,6 +24,8 @@
   --color-text: #16211c;
   --color-text-muted: #56665e;
   --color-text-subtle: #84928b;
+  /* Tinta usada para misturar com as cores dos produtos (bordas e textos dos blocos do mapa) */
+  --color-ink: #13201a;
 
   /* Estados */
   --color-success-600: #15803d;
@@ -30,15 +37,26 @@
   --color-info-600: #2563a8;
   --color-info-50: #eef4fb;
 
+  /* Elementos específicos */
+  --color-slot-taken: #dfe5e2;
+  --color-floor-dot: #d6ddd9;
+  --color-tooltip-bg: #12221b;
+  --color-tooltip-text: #eef5f1;
+  --help-bg-1: #f1f9f4;
+  --help-bg-2: #f7fbf9;
+  --help-border: #cfe5d9;
+  --skeleton-a: #e9eeeb;
+  --skeleton-b: #f4f7f5;
+
   /* Tipografia */
-  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Inter Variable', 'Inter', 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, 'Courier New', monospace;
 
   /* Forma e profundidade */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
-  --shadow-sm: 0 1px 2px rgba(16, 24, 20, 0.06);
+  --shadow-sm: 0 1px 2px rgba(16, 24, 20, 0.05), 0 1px 3px rgba(16, 24, 20, 0.04);
   --shadow-md: 0 4px 14px rgba(16, 24, 20, 0.08);
   --shadow-focus: 0 0 0 3px rgba(33, 135, 95, 0.28);
 
@@ -49,4 +67,62 @@
   /* Layout */
   --container-max: 1180px;
   --header-height: 64px;
+}
+
+/* ==========================================================================
+   Tema escuro
+   Ativado por data-theme="dark" no <html> (ver ThemeContext e index.html).
+   ========================================================================== */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Verdes mais claros para manter contraste sobre fundo escuro */
+  --color-brand-700: #2b9a6b;
+  --color-brand-600: #45b884;
+  --color-brand-500: #3fbf86;
+  --color-brand-400: #4fd197;
+  --color-brand-100: #1a3a2c;
+  --color-brand-50: #13261e;
+
+  --color-bg: #0d1411;
+  --color-surface: #141d19;
+  --color-surface-muted: #19241f;
+  --color-border: #26332d;
+  --color-border-strong: #36463e;
+  --color-text: #e4ece7;
+  --color-text-muted: #a3b2aa;
+  --color-text-subtle: #76877e;
+  --color-ink: #e9f1ec;
+
+  --color-success-600: #46c97f;
+  --color-success-50: #11281c;
+  --color-danger-600: #e8604d;
+  --color-danger-50: #2e1714;
+  --color-warning-600: #e3a83f;
+  --color-warning-50: #2b2213;
+  --color-info-600: #64a3e8;
+  --color-info-50: #132339;
+
+  --color-slot-taken: #25312b;
+  --color-floor-dot: #213029;
+  --color-tooltip-bg: #e4ece7;
+  --color-tooltip-text: #10201a;
+  --help-bg-1: #10241b;
+  --help-bg-2: #121e19;
+  --help-border: #1f3d2f;
+  --skeleton-a: #19241f;
+  --skeleton-b: #22302a;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.45);
+  --shadow-focus: 0 0 0 3px rgba(79, 209, 151, 0.35);
+}
+
+/* Troca de tema suave, sem animar o carregamento inicial */
+:root.theme-transition,
+:root.theme-transition * {
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease !important;
 }

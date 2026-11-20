@@ -17,7 +17,7 @@ class Settings(BaseSettings):
 
     # Aplicação
     APP_NAME: str = "Amazon Agrosciences - Gestão de Estoque"
-    APP_VERSION: str = "0.2.0"
+    APP_VERSION: str = "0.4.0"
     ENVIRONMENT: str = "development"
     API_V1_PREFIX: str = "/api/v1"
     LOG_LEVEL: str = "INFO"

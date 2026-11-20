@@ -128,6 +128,9 @@
 }
 
 .label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 13px;
   font-weight: 600;
   color: var(--color-text);
@@ -267,6 +270,59 @@
 
 .card-header h2 svg {
   color: var(--color-brand-600);
+}
+
+.card-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.card-title p {
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+}
+
+.step-title {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border);
+}
+
+.step-title:first-child,
+.alert + .step-title {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.step-title .step-number {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-brand-700);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.step-title strong {
+  display: block;
+  font-size: 14.5px;
+}
+
+.step-title small {
+  display: block;
+  font-size: 12.5px;
+  color: var(--color-text-muted);
 }
 
 .card-body {
@@ -466,7 +522,7 @@
 
 .skeleton {
   border-radius: var(--radius-md);
-  background: linear-gradient(90deg, #e9eeeb 25%, #f4f7f5 50%, #e9eeeb 75%);
+  background: linear-gradient(90deg, var(--skeleton-a) 25%, var(--skeleton-b) 50%, var(--skeleton-a) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.3s ease-in-out infinite;
 }
@@ -511,4 +567,19 @@
     width: 100%;
     height: 46px;
   }
+}
+
+code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  color: var(--color-brand-700);
+}
+
+/* Seta do select mais clara no tema escuro */
+:root[data-theme='dark'] .select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23a3b2aa' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
 }

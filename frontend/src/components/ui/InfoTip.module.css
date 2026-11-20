@@ -1,0 +1,86 @@
+.wrap {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.trigger {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin: -2px 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-subtle);
+  cursor: help;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.trigger:hover,
+.trigger[aria-expanded='true'] {
+  color: var(--color-brand-700);
+  background: var(--color-brand-50);
+}
+
+.bubble {
+  position: absolute;
+  top: calc(100% + 8px);
+  z-index: 300;
+  width: max-content;
+  max-width: min(280px, 78vw);
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-tooltip-bg);
+  color: var(--color-tooltip-text);
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: left;
+  text-transform: none;
+  white-space: normal;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+  animation: tip-in 140ms ease both;
+}
+
+.bubble::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  background: inherit;
+  transform: rotate(45deg);
+}
+
+.center {
+  left: 50%;
+  translate: -50% 0;
+}
+.center::before {
+  left: calc(50% - 5px);
+}
+
+.left {
+  left: -8px;
+}
+.left::before {
+  left: 13px;
+}
+
+.right {
+  right: -8px;
+}
+.right::before {
+  right: 13px;
+}
+
+@keyframes tip-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+}

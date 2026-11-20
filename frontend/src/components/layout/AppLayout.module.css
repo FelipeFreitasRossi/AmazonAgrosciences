@@ -1,5 +1,5 @@
 .shell {
-  --sidebar-width: 248px;
+  --sidebar-width: 264px;
   display: flex;
   min-height: 100vh;
 }
@@ -13,8 +13,11 @@
   width: var(--sidebar-width);
   height: 100vh;
   flex-shrink: 0;
-  padding: 18px 14px;
-  background: linear-gradient(180deg, var(--color-brand-900), #0d3527);
+  padding: 18px 14px 14px;
+  overflow-y: auto;
+  background:
+    radial-gradient(120% 60% at 0% 0%, rgba(63, 191, 134, 0.12), transparent 60%),
+    linear-gradient(180deg, var(--color-brand-900), #0c3125);
   color: #fff;
 }
 
@@ -26,20 +29,20 @@
 }
 
 .sidebar .brand {
-  padding: 4px 6px 22px;
-  margin-bottom: 10px;
+  padding: 4px 6px 20px;
+  margin-bottom: 6px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .logo {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
-  border-radius: var(--radius-md);
-  background: rgba(63, 191, 134, 0.16);
-  border: 1px solid rgba(63, 191, 134, 0.32);
+  border-radius: 11px;
+  background: linear-gradient(140deg, rgba(63, 191, 134, 0.3), rgba(63, 191, 134, 0.1));
+  border: 1px solid rgba(63, 191, 134, 0.35);
   color: var(--color-brand-400);
 }
 
@@ -52,6 +55,8 @@
 
 .brandText strong {
   font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -59,47 +64,99 @@
 
 .brandText span {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.58);
 }
 
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 14px;
+  padding-top: 10px;
 }
 
-.navLink {
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.groupTitle {
+  padding: 0 12px 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.navLink,
+.helpButton {
   position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
-  height: 42px;
-  padding: 0 12px;
+  min-height: 50px;
+  padding: 7px 12px;
+  border: 0;
   border-radius: var(--radius-md);
+  background: transparent;
   font-size: 14px;
-  font-weight: 500;
   color: rgba(255, 255, 255, 0.72);
+  text-align: left;
   text-decoration: none;
+  cursor: pointer;
   transition: background var(--transition-fast), color var(--transition-fast);
 }
 
-.navLink:hover {
+.navLink svg,
+.helpButton svg {
+  flex-shrink: 0;
+}
+
+.navLink:hover,
+.helpButton:hover {
   background: rgba(255, 255, 255, 0.06);
   color: #fff;
 }
 
+.navText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.navLabel {
+  font-weight: 550;
+}
+
+.navDescription {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .active {
-  background: rgba(63, 191, 134, 0.14);
+  background: rgba(63, 191, 134, 0.15);
   color: #fff;
-  font-weight: 600;
+}
+
+.active .navLabel {
+  font-weight: 650;
+}
+
+.active .navDescription {
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .active::before {
   content: '';
   position: absolute;
   left: -14px;
-  top: 9px;
-  bottom: 9px;
+  top: 10px;
+  bottom: 10px;
   width: 3px;
   border-radius: 0 3px 3px 0;
   background: var(--color-brand-400);
@@ -110,9 +167,22 @@
 }
 
 .sidebarFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   margin-top: auto;
-  padding: 14px 8px 0;
+  padding-top: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.themeCompact {
+  display: none;
+}
+
+.helpButton {
+  width: 100%;
+  font: inherit;
+  font-size: 14px;
 }
 
 /* ---------- Status do sistema ---------- */
@@ -120,9 +190,10 @@
   --dot: #8fa39a;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  padding: 0 12px 2px;
   font-size: 12.5px;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .status_ok {
@@ -135,6 +206,7 @@
 .statusDot {
   width: 8px;
   height: 8px;
+  flex-shrink: 0;
   border-radius: 50%;
   background: var(--dot);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--dot) 22%, transparent);
@@ -142,6 +214,17 @@
 
 .status_loading .statusDot {
   animation: pulse 1.2s ease-in-out infinite;
+}
+
+.statusText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.statusText small {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
 }
 
 @keyframes pulse {
@@ -173,7 +256,7 @@
 /* ---------- Tablet: barra lateral só com ícones ---------- */
 @media (max-width: 1100px) {
   .shell {
-    --sidebar-width: 76px;
+    --sidebar-width: 78px;
   }
 
   .sidebar {
@@ -182,19 +265,30 @@
   }
 
   .sidebar .brandText,
-  .navLabel,
-  .statusLabel {
+  .navText,
+  .groupTitle,
+  .statusText {
     display: none;
   }
 
   .sidebar .brand {
-    padding: 0 0 16px;
+    padding: 0 0 14px;
   }
 
-  .navLink {
+  .navGroup {
+    align-items: center;
+  }
+
+  .navGroup + .navGroup {
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .navLink,
+  .helpButton {
     justify-content: center;
-    width: 48px;
-    height: 46px;
+    width: 50px;
+    min-height: 46px;
     padding: 0;
   }
 
@@ -203,7 +297,19 @@
   }
 
   .sidebarFooter {
-    padding: 14px 0 0;
+    align-items: center;
+  }
+
+  .themeFull {
+    display: none;
+  }
+
+  .themeCompact {
+    display: block;
+  }
+
+  .status {
+    padding: 4px 0;
   }
 
   .main {
@@ -224,19 +330,42 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 56px;
-    padding: 0 16px;
-    background: var(--color-brand-900);
+    gap: 12px;
+    height: 60px;
+    padding: 0 12px 0 16px;
+    background: linear-gradient(90deg, var(--color-brand-900), var(--color-brand-800));
     color: #fff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
   }
 
   .mobileHeader .logo {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .mobileActions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .mobileHelp {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .mobileHelp:active {
+    background: rgba(255, 255, 255, 0.1);
   }
 
   .main {
-    padding: 16px 14px calc(92px + env(safe-area-inset-bottom));
+    padding: 16px 14px calc(96px + env(safe-area-inset-bottom));
   }
 
   .bottomNav {
@@ -248,7 +377,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
-    background: rgba(255, 255, 255, 0.96);
+    background: color-mix(in srgb, var(--color-surface) 96%, transparent);
     backdrop-filter: blur(10px);
     border-top: 1px solid var(--color-border);
     box-shadow: 0 -4px 20px rgba(16, 24, 20, 0.06);
@@ -260,8 +389,7 @@
     align-items: center;
     justify-content: center;
     gap: 3px;
-    min-height: 54px;
-    border-radius: var(--radius-md);
+    min-height: 56px;
     font-size: 11px;
     font-weight: 600;
     color: var(--color-text-subtle);
@@ -269,16 +397,20 @@
     transition: color var(--transition-fast);
   }
 
+  .bottomIcon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 28px;
+    border-radius: 999px;
+    transition: background var(--transition-fast);
+  }
+
   .bottomActive {
     color: var(--color-brand-700);
   }
 
-  .bottomActive svg {
-    padding: 2px 14px;
-    width: 50px;
-    height: 26px;
-    border-radius: 999px;
+  .bottomActive .bottomIcon {
     background: var(--color-brand-100);
-    box-sizing: border-box;
   }
 }

@@ -3,6 +3,7 @@ import type { FormEvent } from 'react';
 import { Link } from 'react-router';
 import { Grid3x3, Map as MapIcon, Pencil, Plus, Sparkles, Trash2, Warehouse as WarehouseIcon } from 'lucide-react';
 import EmptyState from '@/components/ui/EmptyState.tsx';
+import HelpPanel from '@/components/ui/HelpPanel.tsx';
 import Modal from '@/components/ui/Modal.tsx';
 import PageHeader from '@/components/ui/PageHeader.tsx';
 import { useToast } from '@/contexts/ToastContext.tsx';
@@ -49,13 +50,27 @@ export default function WarehousesPage() {
   return (
     <>
       <PageHeader
+        eyebrow="Cadastros"
+        icon={WarehouseIcon}
         title="Galpões"
-        description="Estrutura física do estoque: galpões, setores/áreas e a grade de posições de cada setor."
+        description="Estrutura física do estoque. Aqui você desenha cada galpão para que ele apareça no mapa."
         actions={
           <button type="button" className="btn btn-primary" onClick={() => setDialog({ kind: 'warehouse', warehouse: null })}>
             <Plus size={17} /> Novo galpão
           </button>
         }
+      />
+
+      <HelpPanel
+        id="galpoes"
+        title="Como a estrutura funciona"
+        steps={[
+          <><strong>Galpão</strong>: o prédio (ex.: G01 — Galpão 01).</>,
+          <><strong>Setor</strong>: uma área dentro do galpão (ex.: Setor A), desenhada como uma grade de <strong>linhas × colunas</strong>.</>,
+          <><strong>Posição</strong>: cada quadrado da grade, onde cabe um IBC ou barril. Numeradas da esquerda para a direita, linha por linha.</>,
+          <>O endereço completo fica <code>G01-A-07</code>: Galpão 01, Setor A, Posição 07.</>,
+        ]}
+        footer="Dica: desenhe a grade como as posições realmente estão no chão do galpão; assim o mapa fica fiel ao local."
       />
 
       {error && <div className="alert alert-error" style={{ marginBottom: 16 }}>{error}</div>}
